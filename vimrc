@@ -25,12 +25,16 @@ autocmd FileType make setlocal noexpandtab
 " Enable omnicompletion (to use, hold Ctrl+X then Ctrl+O while in Insert mode.
 set ofu=syntaxcomplete#Complete
 
+" Automatically cd into the directory that the file is in
+autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Theme/Colors                                                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_Co=256              " Enable 256-color mode.
 syntax enable             " Enable syntax highlighting.
-colorscheme molokai       " Set colorscheme
+color elflord             " Select colorscheme from built-in options as fallback
+colorscheme onedark       " Select user-defined colorscheme
 
 " Prettify JSON files
 autocmd BufRead,BufNewFile *.json set filetype=json
