@@ -1,0 +1,24 @@
+[user]
+	email = k.kou@alumni.ubc.ca
+	name = Kelvin Kou
+[alias]
+        co = checkout
+        cob = checkout -b
+	br = branch
+        cm = !git add -A && git commit -m
+        save = !git add -A && git commit -m 'SAVEPOINT'
+        undo = reset HEAD~1 --mixed
+        amend = commit -a --amend -m
+	st = status
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	pl = log --graph --pretty='%Cred%h%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -12
+	alias = config --get-regexp alias
+        wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+	editalias = config --global -e
+[credential]
+	helper = cache
+[core]
+	excludesfile = /home/kkou/.gitignore_global
+[git]
+	trashafterhead = reset --hard HEAD

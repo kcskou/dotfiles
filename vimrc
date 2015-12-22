@@ -1,71 +1,99 @@
-" Wrap long lines:
-set wrap
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sections:                                                                  "
+"   01. General ................. General Vim behavior                       "
+"   02. Events .................. General autocmd events                     "
+"   03. Theme/Colors ............ Colors, fonts, etc.                        "
+"   04. Vim UI .................. User interface behavior                    "
+"   05. Text Formatting/Layout .. Text, tab, indentation related             "
+"   06. Custom Commands ......... Any custom command aliases                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 01. General                                                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible          " Get rid of Vi compatibility mode
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 02. Events                                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Filetype detection for smart auto-indenting and filetype specific plugins
 filetype indent plugin on
 
-" Enable syntax highlighting
-syntax on
+" In Makefiles, use tabs
+autocmd FileType make setlocal noexpandtab
 
-" Vim with default settings does not allow easy switching between multiple files
-" in the same editor window. Users can use multiple split windows or multiple
-" tab pages to edit multiple files, but it is still best to enable an option to
-" allow easier switching between files.
-"
-" One such option is the 'hidden' option, which allows you to re-use the same
-" window and switch from an unsaved buffer without saving it first. Also allows
-" you to keep an undo history for multiple files when re-using the same window
-" in this way. Note that using persistent undo also lets you undo in multiple
-" files even in the same window, but is less efficient and is actually designed
-" for keeping undo history after closing Vim entirely. Vim will complain if you
-" try to quit without saving, and swap files will keep you safe if your computer
-" crashes.
-set hidden
+" Enable omnicompletion (to use, hold Ctrl+X then Ctrl+O while in Insert mode.
+set ofu=syntaxcomplete#Complete
 
-" Better command-line completion
-set wildmenu
- 
-" Show partial commands in the last line of the screen
-set showcmd
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 03. Theme/Colors                                                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set t_Co=256              " Enable 256-color mode.
+syntax enable             " Enable syntax highlighting.
+colorscheme molokai       " Set colorscheme
 
-" Highlight searches (use <C-L> to temporarily turn off highlighting; see the
-" mapping of <C-L> below)
-set hlsearch
+" Prettify JSON files
+autocmd BufRead,BufNewFile *.json set filetype=json
+autocmd Syntax json sou ~/.vim/syntax/json.vim
 
-" When opening a new line and no filetype-specific indenting is enabled, keep
-" the same indent as the line you're currently on. Useful for READMEs, etc.
-set autoindent
+" Prettify Markdown files
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 
-" Display the cursor position on the last line of the screen or in the status
-" line of a window
-set ruler
+" Highlight characters that go over 80 columns
+if exists('+colorcolumn')
+  set colorcolumn=81
+  highlight ColorColumn ctermbg=red
+else
+  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  match OverLength /\%81v.\+/
+endif
 
-" Enable use of the mouse for all modes
-set mouse=a
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 04. Vim UI                                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set number                " Show line numbers
+set numberwidth=6         " Make the number gutter 6 characters wide
+set cul                   " Highlight current line
+set laststatus=2          " Last window always has a statusline
+set nohlsearch            " Don't continue to highlight searched phrases.
+set incsearch             " But do highlight as you type your search.
+set ignorecase            " Make searches case-insensitive.
+set ruler                 " Always show info along bottom.
+set showmatch             " Hint at location of matching brace
+set matchtime=3           " Delay to move cursor to matching brace
+set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
+set visualbell
+set hidden                " Switch buffers w/o writing or losing changes
+set wildmenu              " Better command-line completion
+set wildmode=list:longest,full " Complete to longest matching command, list all completions on menu
+set showcmd               " Show partial commands on the last line
+set mouse=a               " Enable use of the mouse for all modes
+set cmdheight=2           " avoid "Hit <Enter> to continue" by adding space
 
-" Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
-set cmdheight=2
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 05. Text Formatting/Layout                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set autoindent            " Non filetype-specific indenting
+set softtabstop=4         " Unify
+set shiftwidth=4          " Indent/outdent by 2 columns
+set shiftround            " Indent/outdent to the nearest tabstop
+set expandtab             " Use spaces instead of tabs
+set nowrap                " Don't wrap text
+syntax on                 " Enable syntax highlighting
 
-" Display line numbers on the left
-set number
 
-" Indentation settings for using 4 spaces instead of tabs.
-" Do not change 'tabstop' from its default value of 8 with this setup.
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-
-" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
-" which is the default
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 06. Custom Commands                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map Y to yank until EOL, rather than act as yy
 map Y y$
  
-" Map <C-L> (redraw screen) to also turn off search highlighting until the
-" next search
-nnoremap <C-L> :nohl<CR><C-L>
-
 " Map <Tab> and <Shift-Tab> to cycle through hidden buffer in normal mode
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
+
+" Jump to matching braces and select inner text
+:noremap % v%
