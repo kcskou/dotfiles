@@ -32,7 +32,7 @@ autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 " 03. Theme/Colors                                                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_Co=256              " Enable 256-color mode.
-syntax enable             " Enable syntax highlighting.
+syntax on                 " Always enable syntax highlighting.
 color elflord             " Select colorscheme from built-in options as fallback
 colorscheme onedark       " Select user-defined colorscheme
 
@@ -86,7 +86,6 @@ set shiftwidth=4          " Indent/outdent by 2 columns
 set shiftround            " Indent/outdent to the nearest tabstop
 set expandtab             " Use spaces instead of tabs
 set nowrap                " Don't wrap text
-syntax on                 " Enable syntax highlighting
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
