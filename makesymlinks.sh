@@ -1,14 +1,13 @@
 #!/bin/bash
 ############################
-# .make.sh
-# This script creates symlinks from the home directory to any desired dotfiles in ~/dotfiles
+# This script creates symlinks from the home directory to all dotfiles
+# in ~/dotfiles
 ############################
 
 ########## Variables
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="vimrc gitignore_global gitconfig vim"    # list of files/folders to symlink in homedir
 
 ########## Functions
 
@@ -28,8 +27,6 @@ link() {
     else
         # Link-creation mode.
         if windows; then
-            # Windows needs to be told if it's a directory or not. Infer that.
-            # Also: note that we convert `/` to `\`. In this case it's necessary.
             local slashFlipped1="${1//\//\\}"
 	    local slashFlipped2="${2//\//\\}"
 	    local winPath1="${slashFlipped1:1:1}:${slashFlipped1:2}"
@@ -45,6 +42,9 @@ link() {
     fi
 }
 
+# Accepts a string, return true if the string contains no '.'
+nameHasNoDot() { [[ `expr index $1 "."` = 0 ]]; }
+
 ########## Script
 
 # create dotfiles_old in homedir
@@ -57,12 +57,19 @@ echo -n "Changing to the $dir directory ..."
 cd $dir
 echo "done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-for file in $files; do
-    echo -n "Moving any existing .$file to $olddir ..."
-    mv ~/.$file ~/dotfiles_old/
-    echo "done"
-    echo -n "Creating symlink to $file in $HOME ..."
-    link ~/.$file $dir/$file
-    echo "done"
+# move any existing dotfiles in homedir to dotfiles_old directory, then create 
+# symlinks from the homedir to any files/dir with no '.' in their basenames
+# in the ~/dotfiles directory 
+workDirFiles=$PWD/*
+for filepath in $workDirFiles
+do
+    basename=$(basename $filepath)
+    if nameHasNoDot $basename; then
+        echo -n "Moving any existing .$basename to $olddir ..."
+        mv ~/.$basename ~/dotfiles_old/
+        echo "done"
+        echo -n "Creating symlink to $basename in $HOME ..."
+        link ~/.$basename $dir/$basename
+        echo "done"
+    fi
 done
