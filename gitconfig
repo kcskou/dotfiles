@@ -19,6 +19,6 @@
 [credential]
 	helper = cache
 [core]
-	excludesfile = /home/kkou/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [git]
 	trashafterhead = reset --hard HEAD
