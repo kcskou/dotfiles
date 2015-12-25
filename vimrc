@@ -11,7 +11,15 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 01. General                                                                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible          " Get rid of Vi compatibility mode
+" Get rid of Vi compatibility mode
+set nocompatible          
+
+" Tell Vim for Windows ~/.vim exists. By default it only uses ~/vimfiles.
+if has("win32") && isdirectory(expand("$HOME")."/.vim") &&
+            \!isdirectory(expand("$HOME")."/vimfiles") 
+    let &rtp="$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,
+                \$VIM/vimfiles/after,$HOME/.vim/after" 
+endif 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
@@ -34,7 +42,7 @@ autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 syntax enable             " Enable syntax highlighting; allow using :highlight
 set background=dark       " Use dark mode of solarized
 if !has('gui_running')    " Degrade solarized colorscheme if not using gVim
-  let g:solarized_termcolors=256
+    let g:solarized_termcolors=256
 endif
 colorscheme solarized     " Use solarized colorscheme
 
@@ -44,17 +52,17 @@ autocmd Syntax json sou ~/.vim/syntax/json.vim
 
 " Prettify Markdown files
 augroup markdown
-  au!
-  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
 
 " Highlight characters that go over 80 columns
 if exists('+colorcolumn')
-  set colorcolumn=81
-  highlight ColorColumn ctermbg=red
+    set colorcolumn=81
+    highlight ColorColumn ctermbg=red
 else
-  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-  match OverLength /\%81v.\+/
+    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+    match OverLength /\%81v.\+/
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -100,7 +108,7 @@ set nowrap                " Don't wrap text
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Y -> Yank until EOL, rather than act as yy
 map Y y$
- 
+
 " <Tab> and <Shift-Tab> -> Cycle through hidden buffer in normal mode
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
