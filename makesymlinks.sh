@@ -43,7 +43,7 @@ link() {
 }
 
 # Accepts a string, return true if the string contains no '.'
-nameHasNoDot() { [[ `expr index $1 "."` = 0 ]]; }
+nameHasNoDot() { [[ $(expr index $1 ".") = 0 ]]; }
 
 ########## Script
 
