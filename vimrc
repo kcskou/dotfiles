@@ -31,10 +31,12 @@ autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Theme/Colors                                                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set t_Co=256              " Enable 256-color mode.
-syntax on                 " Always enable syntax highlighting.
-color elflord             " Select colorscheme from built-in options as fallback
-colorscheme onedark       " Select user-defined colorscheme
+syntax enable             " Enable syntax highlighting; allow using :highlight
+set background=dark       " Use dark mode of solarized
+if !has('gui_running')    " Degrade solarized colorscheme if not using gVim
+  let g:solarized_termcolors=256
+endif
+colorscheme solarized     " Use solarized colorscheme
 
 " Prettify JSON files
 autocmd BufRead,BufNewFile *.json set filetype=json
