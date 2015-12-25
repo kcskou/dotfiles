@@ -79,6 +79,11 @@ set showcmd               " Show partial commands on the last line
 set mouse=a               " Enable use of the mouse for all modes
 set cmdheight=2           " avoid 'Hit <Enter> to continue' by adding space
 
+" gVim UI settings
+set guioptions-=m         " Remove menu bar
+set guioptions-=T         " Remove toolbar
+set guioptions-=r         " Remove right-hand scrollbar
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -93,12 +98,21 @@ set nowrap                " Don't wrap text
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map Y to yank until EOL, rather than act as yy
+" Y -> Yank until EOL, rather than act as yy
 map Y y$
  
-" Map <Tab> and <Shift-Tab> to cycle through hidden buffer in normal mode
-:nnoremap <Tab> :bnext<CR>
-:nnoremap <S-Tab> :bprevious<CR>
+" <Tab> and <Shift-Tab> -> Cycle through hidden buffer in normal mode
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
 
-" Jump to matching braces and select inner text
-:noremap % v%
+" % -> Jump to matching braces and select inner text
+noremap % v%
+
+" <Shift-F1> -> Toggle gVim menu bar
+nnoremap <S-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
+
+" <Shift-F2> -> Toggle gVim toolbar
+nnoremap <S-F2> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
+
+" <Shift-F3> -> Toggle gVim right-hand scrollbar
+nnoremap <S-F3> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
