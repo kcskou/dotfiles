@@ -87,11 +87,6 @@ set showcmd               " Show partial commands on the last line
 set mouse=a               " Enable use of the mouse for all modes
 set cmdheight=2           " avoid 'Hit <Enter> to continue' by adding space
 
-" gVim UI settings
-set guioptions-=m         " Remove menu bar
-set guioptions-=T         " Remove toolbar
-set guioptions-=r         " Remove right-hand scrollbar
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,7 +96,6 @@ set shiftwidth=4          " Indent/outdent by 2 columns
 set shiftround            " Indent/outdent to the nearest tabstop
 set expandtab             " Use spaces instead of tabs
 set nowrap                " Don't wrap text
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
@@ -115,12 +109,3 @@ nnoremap <S-Tab> :bprevious<CR>
 
 " % -> Jump to matching braces and select inner text
 noremap % v%
-
-" <Shift-F1> -> Toggle gVim menu bar
-nnoremap <S-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
-
-" <Shift-F2> -> Toggle gVim toolbar
-nnoremap <S-F2> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
-
-" <Shift-F3> -> Toggle gVim right-hand scrollbar
-nnoremap <S-F3> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
