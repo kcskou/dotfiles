@@ -1,3 +1,6 @@
+" Set default font to DejaVu Sans Mono and Lucida Console as fallback
+set guifont=DejaVu\ Sans\ Mono:h10,Lucida_Console:h10
+
 set guioptions-=m         " Remove menu bar
 set guioptions-=T         " Remove toolbar
 set guioptions-=r         " Remove right-hand scrollbar
