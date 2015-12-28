@@ -96,6 +96,8 @@ set shiftwidth=4          " Indent/outdent by 2 columns
 set shiftround            " Indent/outdent to the nearest tabstop
 set expandtab             " Use spaces instead of tabs
 set nowrap                " Don't wrap text
+set backspace=indent,     " Fix issue of backspace getting stuck 
+            \eol,start 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
