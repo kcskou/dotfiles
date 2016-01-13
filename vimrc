@@ -56,6 +56,9 @@ augroup markdown
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
 
+" Associate *.sah with JavaScript filetype
+autocmd BufRead,BufNewFile *.sah setfiletype JavaScript
+
 " Highlight characters that go over 80 columns
 if exists('+colorcolumn')
     set colorcolumn=81
