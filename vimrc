@@ -88,7 +88,8 @@ set wildmenu              " Better command-line completion
 set wildmode=list:longest,full " Complete to longest matching command, list all completions on menu
 set showcmd               " Show partial commands on the last line
 set mouse=a               " Enable use of the mouse for all modes
-set cmdheight=2           " avoid 'Hit <Enter> to continue' by adding space
+set cmdheight=2           " Avoid 'Hit <Enter> to continue' by adding space
+set scrolloff=5           " Start scrolling when cursor is 5 lines from top or bottom of screen
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
