@@ -1,0 +1,10 @@
+"*":
+  core:
+    customFileTypes:
+      "source.js": [
+        "sah"
+      ]
+  "exception-reporting":
+    userId: "32d0ba8f-516c-b7bb-2ac0-110ca6ebffaa"
+  welcome:
+    showOnStartup: false
