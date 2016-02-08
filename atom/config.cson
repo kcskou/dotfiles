@@ -4,6 +4,9 @@
       "source.js": [
         "sah"
       ]
+  editor:
+    invisibles: {}
+    tabLength: 4
   "exception-reporting":
     userId: "32d0ba8f-516c-b7bb-2ac0-110ca6ebffaa"
   welcome:
