@@ -5,9 +5,12 @@
         "sah"
       ]
   editor:
+    fontSize: 13
     invisibles: {}
     tabLength: 4
+    tabType: "soft"
   "exception-reporting":
     userId: "32d0ba8f-516c-b7bb-2ac0-110ca6ebffaa"
+  "vim-mode": {}
   welcome:
     showOnStartup: false
