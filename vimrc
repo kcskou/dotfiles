@@ -115,3 +115,9 @@ nnoremap <S-Tab> :bprevious<CR>
 
 " % -> Jump to matching braces and select inner text
 noremap % v%
+
+" add a newline after each occurrence of the last search term for current line
+nnoremap Ss :s//&\r/g<CR>
+
+" add a newline after each occurrence of the last search term for all lines
+nnoremap SS :%s//&\r/g<CR>
