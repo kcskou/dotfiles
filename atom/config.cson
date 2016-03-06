@@ -3,9 +3,9 @@
     customFileTypes:
       "source.js": [
         "sah"
+        "jsx"
       ]
   editor:
-    fontSize: 13
     invisibles: {}
     tabLength: 4
     tabType: "soft"
