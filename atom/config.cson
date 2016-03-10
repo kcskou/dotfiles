@@ -6,6 +6,7 @@
         "jsx"
       ]
   editor:
+    fontSize: 15
     invisibles: {}
     tabLength: 4
     tabType: "soft"

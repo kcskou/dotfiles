@@ -27,14 +27,20 @@ endif
 " Filetype detection for smart auto-indenting and filetype specific plugins
 filetype indent plugin on
 
-" In Makefiles, use tabs
-autocmd FileType make setlocal noexpandtab
-
 " Enable omnicompletion (to use, hold Ctrl+X then Ctrl+O while in Insert mode.
 set ofu=syntaxcomplete#Complete
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
+
+" In Makefiles, don't expand tabs into spaces
+autocmd FileType make setlocal noexpandtab
+
+" In HTML, use 2 spaces for indent/outdent and tabs
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+
+" Associate *.sah with JavaScript filetype
+autocmd BufRead,BufNewFile *.sah setfiletype JavaScript
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Theme/Colors                                                           "
@@ -55,9 +61,6 @@ augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
-
-" Associate *.sah with JavaScript filetype
-autocmd BufRead,BufNewFile *.sah setfiletype JavaScript
 
 " Highlight characters that go over 80 columns
 if exists('+colorcolumn')
@@ -96,7 +99,7 @@ set scrolloff=5           " Start scrolling when cursor is 5 lines from top or b
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoindent            " Non filetype-specific indenting
 set softtabstop=4         " Unify
-set shiftwidth=4          " Indent/outdent by 2 columns
+set shiftwidth=4          " Indent/outdent by 4 spaces
 set shiftround            " Indent/outdent to the nearest tabstop
 set expandtab             " Use spaces instead of tabs
 set nowrap                " Don't wrap text
