@@ -5,9 +5,12 @@ windows() { [[ -n "$WINDIR" ]]; }
 # Enable 256 color mode for the terminal
 export TERM=xterm-256color
 
-# env variables
-export JAVA_HOME='/usr/java/jdk1.8.0_91'
+# JDK
+export JAVA_HOME=/usr/java/jdk1.8.0_91
 export PATH=$JAVA_HOME/bin:$PATH
+
+# Android Studio
+export PATH=/opt/android-studio/bin:$PATH
 
 # alias for windows
 if windows; then
