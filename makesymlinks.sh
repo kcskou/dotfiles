@@ -61,7 +61,7 @@ do
     basename=$(basename $filepath)
     if nameHasNoDot $basename; then
         echo -n "Moving any existing .$basename to $olddir ..."
-        mv ~/.$basename ~/dotfiles_old/
+        mv ~/.$basename $olddir
         echo "done"
         echo -n "Creating symlink to $basename in $HOME ..."
         link ~/.$basename $dir/$basename
