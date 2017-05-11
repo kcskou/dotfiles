@@ -1,7 +1,8 @@
 #!/bin/bash
 ############################
 # This script creates symlinks from the home directory to all dotfiles
-# in ~/dotfiles
+# in ~/dotfiles. In order for this to work on Windows, 
+# run this script on Git Bash (Run as administrator).
 ############################
 
 ########## Variables
@@ -11,7 +12,15 @@ olddir=~/dotfiles_old             # old dotfiles backup directory
 
 ########## Functions
 
+# Return true if OS is Windows
 windows() { [[ -n "$WINDIR" ]]; }
+
+# Accepts a string, return true if the string contains no '.'
+nameHasNoDot() { [[ $(expr index $1 ".") -eq 0 ]]; }
+
+# Given an absolute path to a file or directory, return true if it exists
+pathExists() { [[ -f "$1" || -d "$1" ]]; }
+
 
 # Cross-platform symlink function. With one parameter, it will check
 # whether the parameter is a symlink. With two parameters, it will create
@@ -42,15 +51,15 @@ link() {
     fi
 }
 
-# Accepts a string, return true if the string contains no '.'
-nameHasNoDot() { [[ $(expr index $1 ".") -eq 0 ]]; }
 
 ########## Script
 
 # create dotfiles_old in homedir
-echo -n "Creating $olddir for backup of any existing dotfiles in ~ ..."
-mkdir -p $olddir
-echo "done"
+if ! pathExists $olddir; then
+    printf "Creating $olddir for backup of any existing dotfiles in ~ ..."
+    mkdir -p $olddir
+    printf "done\n\n"
+fi
 
 # move any existing dotfiles in homedir to dotfiles_old directory, then create 
 # symlinks from the homedir to any files/dir with no '.' in their basenames
@@ -60,11 +69,16 @@ for filepath in $allFiles
 do
     basename=$(basename $filepath)
     if nameHasNoDot $basename; then
-        echo -n "Moving any existing .$basename to $olddir ..."
-        mv ~/.$basename $olddir
-        echo "done"
-        echo -n "Creating symlink to $basename in $HOME ..."
+        # Backup existing dotfiles
+        if pathExists ~/.$basename; then
+            printf "Moving an existing .$basename to $olddir ..."
+            mv --backup=numbered ~/.$basename $olddir
+            printf "done\n"
+        fi
+        printf "Creating symlink $HOME/.$basename -> $dir/$basename ..."
         link ~/.$basename $dir/$basename
-        echo "done"
+        printf "done\n\n"
     fi
 done
+
+printf "All done.\n"
