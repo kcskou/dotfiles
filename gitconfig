@@ -17,9 +17,15 @@
         wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 	editalias = config --global -e
         untrack = rm --cached
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%ar%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
 [credential]
 	helper = cache
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = less -FMRiX
 [git]
 	trashafterhead = reset --hard HEAD
+[color]
+	ui = auto
+[push]
+	default = simple
