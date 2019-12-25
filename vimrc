@@ -39,6 +39,9 @@ autocmd FileType make setlocal noexpandtab
 " In HTML, use 2 spaces for indent/outdent and tabs
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 
+" Highlight characters that go over 120 columns
+autocmd FileType * call HighlightColorColumn()
+
 " Associate *.sah with JavaScript filetype
 autocmd BufRead,BufNewFile *.sah setfiletype JavaScript
 
@@ -57,15 +60,6 @@ augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
-
-" Highlight characters that go over 80 columns
-if exists('+colorcolumn')
-    set colorcolumn=81
-    highlight ColorColumn ctermbg=red
-else
-    highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-    match OverLength /\%81v.\+/
-endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Vim UI                                                                 "
@@ -122,3 +116,19 @@ nnoremap Ss :s//&\r/g<CR>
 
 " add a newline after each occurrence of the last search term for all lines
 nnoremap SS :%s//&\r/g<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 07. Custom Functions                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function HighlightColorColumn()
+    if &filetype != 'ion' && &filetype != 'json'
+        if exists('+colorcolumn')
+            set colorcolumn=121
+            highlight ColorColumn ctermbg=red
+        else
+            highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+            match OverLength /\%121v.\+/
+        endif
+    endif
+endfunction
+
