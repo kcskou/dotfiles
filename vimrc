@@ -52,10 +52,6 @@ if !has('gui_running')    " Degrade solarized colorscheme if not using gVim
 endif
 colorscheme solarized     " Use solarized colorscheme
 
-" Prettify JSON files
-autocmd BufRead,BufNewFile *.json set filetype=json
-autocmd Syntax json sou ~/.vim/syntax/json.vim
-
 " Prettify Markdown files
 augroup markdown
     au!
@@ -105,6 +101,8 @@ set expandtab             " Use spaces instead of tabs
 set nowrap                " Don't wrap text
 set backspace=indent,
             \eol,start    " Fix issue of backspace getting stuck  
+set foldmethod=syntax     " Enable code folding e.g. za, zo, zc, zR, zM
+set foldlevel=99          " Don't fold immediately when opening file
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
