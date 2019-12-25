@@ -1,5 +1,20 @@
 ############# Functions
+# Return true if OS is windows.
 windows() { [[ -n "$WINDIR" ]]; }
+
+# Execute git command to all git repositories under current directory.
+# Arguments: 
+#            git-command. Git command without the 'git'. Example: 'status', 'pull --rebase'.
+#            max-depth. Max-depth to search recursively (optional). Default: 3.
+rgit() {
+    if [ $# != 1 ] && [ $# != 2 ]; then
+        echo "Usage: rgit '<git-command>' [max-depth]"
+        return 1
+    fi
+    CMD=$1
+    DEPTH=${2:-3}
+    find . -maxdepth $DEPTH -name .git -exec sh -c "cd "{}"/../ && pwd && git ${CMD} && echo" \;
+}
 
 ############# Script
 # Enable 256 color mode for the terminal
@@ -13,7 +28,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 export PATH=/opt/android-studio/bin:$PATH
 
 
-# Aliases
+############# Aliases
 alias getwebsite='wget --recursive `#breadth-first traversal with a max depth of 5` \
                        --page-requisites `#get all files needed to display the HTML page` \
                        --adjust-extension `#adjust extension for local filenames` \
