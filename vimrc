@@ -118,7 +118,7 @@ nnoremap Ss :s//&\r/g<CR>
 nnoremap SS :%s//&\r/g<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 07. Custom Functions                                                        "
+" 07. Custom Functions                                                       "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function HighlightColorColumn()
     if &filetype != 'ion' && &filetype != 'json'
