@@ -39,3 +39,7 @@ Session.vim
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+### IntelliJ project files ###
+*.iml
+*.idea/*
