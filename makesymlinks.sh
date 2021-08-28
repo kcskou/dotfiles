@@ -7,20 +7,18 @@
 
 ########## Variables
 
-dir=~/dotfiles                    # dotfiles directory
-olddir=~/dotfiles_old             # old dotfiles backup directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"  # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+ROOT_DIR=$(dirname $SCRIPT_DIR)  # root directory of the package is 1 level up wherever this script is located
+DOTFILES_DIR=$ROOT_DIR/dotfiles
+BACKUP_DIR=~/dotfiles_backup        # old dotfiles backup directory
 
 ########## Functions
 
 # Return true if OS is Windows
 windows() { [[ -n "$WINDIR" ]]; }
 
-# Accepts a string, return true if the string contains no '.'
-nameHasNoDot() { [[ $(expr index $1 ".") -eq 0 ]]; }
-
 # Given an absolute path to a file or directory, return true if it exists
 pathExists() { [[ -f "$1" || -d "$1" ]]; }
-
 
 # Cross-platform symlink function. With one parameter, it will check
 # whether the parameter is a symlink. With two parameters, it will create
@@ -55,30 +53,31 @@ link() {
 ########## Script
 
 # create dotfiles_old in homedir
-if ! pathExists $olddir; then
-    printf "Creating $olddir for backup of any existing dotfiles in ~ ..."
-    mkdir -p $olddir
+if ! pathExists $BACKUP_DIR; then
+    printf "Creating $BACKUP_DIR for backup of any existing dotfiles in ~ ..."
+    mkdir -p $BACKUP_DIR
     printf "done\n\n"
 fi
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create 
-# symlinks from the homedir to any files/dir with no '.' in their basenames
-# in the ~/dotfiles directory 
-allFiles=$dir/*
-for filepath in $allFiles
+# move any existing dotfiles in homedir to dotfiles_backup directory, then create 
+# symlinks from the homedir to any files/dir with no '.' in their base filenames
+# in the dotfiles directory 
+BACKUP_DIR_WITH_TIMESTAMP=$BACKUP_DIR/$(date +%Y%m%d_%H%M%S)
+
+DOTFILES=$DOTFILES_DIR/*
+for FILEPATH in $DOTFILES
 do
-    basename=$(basename $filepath)
-    if nameHasNoDot $basename; then
-        # Backup existing dotfiles
-        if pathExists ~/.$basename; then
-            printf "Moving an existing .$basename to $olddir ..."
-            mv --backup=numbered ~/.$basename $olddir
-            printf "done\n"
-        fi
-        printf "Creating symlink $HOME/.$basename -> $dir/$basename ..."
-        link ~/.$basename $dir/$basename
-        printf "done\n\n"
+    FILENAME=$(basename $FILEPATH)
+    # Backup existing dotfiles
+    if pathExists ~/.$FILENAME; then
+        mkdir -p $BACKUP_DIR_WITH_TIMESTAMP
+        printf "Moving an existing ~/.$FILENAME to $BACKUP_DIR_WITH_TIMESTAMP ... "
+        mv ~/.$FILENAME $BACKUP_DIR_WITH_TIMESTAMP
+        printf "done\n"
     fi
+    printf "Creating symlink $HOME/.$FILENAME -> $DOTFILES_DIR/$FILENAME ... "
+    link ~/.$FILENAME $DOTFILES_DIR/$FILENAME
+    printf "done\n\n"
 done
 
 printf "All done.\n"
