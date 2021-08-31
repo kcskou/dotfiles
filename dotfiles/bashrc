@@ -16,16 +16,10 @@ rgit() {
     find . -maxdepth $DEPTH -name .git -exec sh -c "cd "{}"/../ && pwd && git ${CMD} && echo" \;
 }
 
-############# Script
-# Enable 256 color mode for the terminal
-export TERM=xterm-256color
-
-# JDK
+############# Env variables
+export TERM=xterm-256color                # Enable 256 color mode for the terminal
 export JAVA_HOME=/usr/java/jdk1.8.0_91
 export PATH=$JAVA_HOME/bin:$PATH
-
-# Android Studio
-export PATH=/opt/android-studio/bin:$PATH
 
 
 ############# Aliases
