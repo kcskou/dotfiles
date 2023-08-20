@@ -39,5 +39,3 @@ if windows; then
     alias meteor='cmd //c meteor'
     alias wget='~/bin/wget64.exe'
 fi
-
-complete -C /usr/local/bin/trellis trellis
