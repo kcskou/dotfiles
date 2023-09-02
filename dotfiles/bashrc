@@ -39,3 +39,7 @@ if windows; then
     alias meteor='cmd //c meteor'
     alias wget='~/bin/wget64.exe'
 fi
+
+# Use keychain to only get asked SSH passphrase once per WSL session
+/usr/bin/keychain --nogui ~/.ssh/digital_ocean # <can add more keys after this>
+source $HOME/.keychain/$(hostname)-sh
