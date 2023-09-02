@@ -3,7 +3,7 @@
 ### Clone this package into home directory
 ```
 cd ~
-git clone https://github.com/kcskou/dotfiles.git
+git clone git@github.com:kcskou/dotfiles.git
 ```
 
 ### Pull submodules
