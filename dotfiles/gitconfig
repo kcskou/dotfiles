@@ -23,6 +23,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	pager = less -FMRiX
+	editor = vim
 [git]
 	trashafterhead = reset --hard HEAD
 [color]
