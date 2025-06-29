@@ -42,4 +42,7 @@ fi
 
 # Use keychain to only get asked SSH passphrase once every time local machine is rebooted
 # See: https://www.funtoo.org/Funtoo:Keychain
-eval `keychain --nogui --eval digital_ocean github` # can add more private keys after the first key
+if command -v keychain >/dev/null 2>&1
+then
+    eval `keychain --nogui --eval digital_ocean github` # can add more private keys after the first key
+fi

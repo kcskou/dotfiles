@@ -103,9 +103,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Enable autocompletion for trellis-cli
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/trellis trellis
-
-# Enable auto-activation/deactivation of Virtualenv when entering/exiting a Trellis project
-eval "$(trellis shell-init zsh)"
+if command -v trellis >/dev/null 2>&1
+then
+    # Enable autocompletion for trellis-cli
+    autoload -U +X bashcompinit && bashcompinit
+    complete -o nospace -C /usr/local/bin/trellis trellis
+    # Enable auto-activation/deactivation of Virtualenv when entering/exiting a Trellis project
+    eval "$(trellis shell-init zsh)"
+fi
